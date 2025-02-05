@@ -42,6 +42,28 @@ else
     echo -e "${GREEN}Node.js telah diperbarui ke versi $NEW_VERSION${NC}"
 fi
 
+# Periksa apakah npm terinstal
+echo -e "${CYAN}Memeriksa instalasi npm...${NC}"
+if ! command -v npm &> /dev/null
+then
+    echo -e "${RED}npm belum terinstal!${NC}"
+    echo -e "${CYAN}Menginstal npm...${NC}"
+    
+    # Instal npm
+    sudo apt-get install -y npm
+    
+    # Verifikasi instalasi npm
+    if command -v npm &> /dev/null
+    then
+        echo -e "${GREEN}npm berhasil diinstal!${NC}"
+    else
+        echo -e "${RED}Gagal menginstal npm. Skrip dihentikan.${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}npm sudah terinstal!${NC}"
+fi
+
 # Klon repositori
 echo -e "${CYAN}Mengkloning repositori...${NC}"
 git clone https://github.com/choir94/Kaleido.git || { echo -e "${RED}Gagal mengkloning repositori!${NC}"; exit 1; }
