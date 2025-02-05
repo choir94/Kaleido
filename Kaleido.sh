@@ -10,6 +10,38 @@ echo -e "${CYAN}====================================="
 echo -e "  Script Kaleido by airdrop node"
 echo -e "=====================================${NC}"
 
+# Periksa apakah Node.js sudah terinstal
+echo -e "${CYAN}Memeriksa instalasi Node.js...${NC}"
+if ! command -v node &> /dev/null
+then
+    echo -e "${RED}Node.js belum terinstal!${NC}"
+    echo -e "${CYAN}Menginstal Node.js...${NC}"
+    
+    # Instal Node.js dan npm
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    
+    # Verifikasi instalasi
+    if command -v node &> /dev/null
+    then
+        echo -e "${GREEN}Node.js berhasil diinstal!${NC}"
+    else
+        echo -e "${RED}Gagal menginstal Node.js. Skrip dihentikan.${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}Node.js sudah terinstal!${NC}"
+    echo -e "${CYAN}Memperbarui Node.js ke versi terbaru...${NC}"
+
+    # Menginstal versi terbaru Node.js
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+    # Verifikasi pembaruan
+    NEW_VERSION=$(node -v)
+    echo -e "${GREEN}Node.js telah diperbarui ke versi $NEW_VERSION${NC}"
+fi
+
 # Klon repositori
 echo -e "${CYAN}Mengkloning repositori...${NC}"
 git clone https://github.com/choir94/Kaleido.git || { echo -e "${RED}Gagal mengkloning repositori!${NC}"; exit 1; }
