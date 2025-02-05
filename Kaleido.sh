@@ -10,6 +10,28 @@ echo -e "${CYAN}====================================="
 echo -e "  Script Kaleido by airdrop node"
 echo -e "=====================================${NC}"
 
+# Periksa apakah curl sudah terinstal
+echo -e "${CYAN}Memeriksa instalasi curl...${NC}"
+if ! command -v curl &> /dev/null
+then
+    echo -e "${RED}curl belum terinstal!${NC}"
+    echo -e "${CYAN}Menginstal curl...${NC}"
+    
+    # Instal curl
+    apt install -y curl
+    
+    # Verifikasi instalasi curl
+    if command -v curl &> /dev/null
+    then
+        echo -e "${GREEN}curl berhasil diinstal!${NC}"
+    else
+        echo -e "${RED}Gagal menginstal curl. Skrip dihentikan.${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}curl sudah terinstal!${NC}"
+fi
+
 # Periksa apakah Node.js sudah terinstal
 echo -e "${CYAN}Memeriksa instalasi Node.js...${NC}"
 if ! command -v node &> /dev/null
@@ -17,9 +39,9 @@ then
     echo -e "${RED}Node.js belum terinstal!${NC}"
     echo -e "${CYAN}Menginstal Node.js...${NC}"
     
-    # Instal Node.js dan npm
-    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    # Instal Node.js dan npm menggunakan NodeSource
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+    apt install -y nodejs
     
     # Verifikasi instalasi
     if command -v node &> /dev/null
@@ -34,8 +56,8 @@ else
     echo -e "${CYAN}Memperbarui Node.js ke versi terbaru...${NC}"
 
     # Menginstal versi terbaru Node.js
-    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+    apt install -y nodejs
 
     # Verifikasi pembaruan
     NEW_VERSION=$(node -v)
@@ -47,10 +69,10 @@ echo -e "${CYAN}Memeriksa instalasi npm...${NC}"
 if ! command -v npm &> /dev/null
 then
     echo -e "${RED}npm belum terinstal!${NC}"
-    echo -e "${CYAN}Menginstal npm...${NC}"
+    echo -e "${CYAN}Menginstal npm menggunakan apt...${NC}"
     
-    # Instal npm
-    sudo apt-get install -y npm
+    # Instal npm menggunakan apt
+    apt install -y npm
     
     # Verifikasi instalasi npm
     if command -v npm &> /dev/null
@@ -71,9 +93,9 @@ git clone https://github.com/choir94/Kaleido.git || { echo -e "${RED}Gagal mengk
 # Beralih ke direktori yang dikloning
 cd Kaleido || { echo -e "${RED}Gagal masuk ke direktori!${NC}"; exit 1; }
 
-# Instal dependensi npm
-echo -e "${CYAN}Menginstal dependensi...${NC}"
-npm install || { echo -e "${RED}Gagal menginstal dependensi!${NC}"; exit 1; }
+# Instal dependensi npm menggunakan apt
+echo -e "${CYAN}Menginstal dependensi npm menggunakan apt...${NC}"
+apt install -y npm || { echo -e "${RED}Gagal menginstal dependensi!${NC}"; exit 1; }
 
 # Minta pengguna memasukkan alamat dompet
 echo -e "${CYAN}Masukkan alamat dompet Anda (harus diawali dengan 0x):${NC}"
