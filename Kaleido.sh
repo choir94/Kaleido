@@ -18,8 +18,10 @@ cd Kaleido
 # Instal dependensi
 npm install
 
-# Buat file wallets.txt jika belum ada
-if [ ! -f "wallets.txt" ]; then
+# Cek apakah wallets.txt sudah ada dan tidak kosong
+if [ -s "wallets.txt" ]; then
+    echo "File wallets.txt sudah ada, melewati input wallet."
+else
     echo "Masukkan alamat wallet satu per baris di wallets.txt"
     nano wallets.txt
 fi
