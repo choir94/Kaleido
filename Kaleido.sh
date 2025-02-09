@@ -24,13 +24,14 @@ fi
 if [ ! -d "Kaleido" ]; then
     echo "[+] Meng-clone repository Kaleido..."
     git clone https://github.com/choir94/Kaleido.git
-else
-    echo "[+] Repository Kaleido sudah ada, menarik pembaruan..."
-    cd Kaleido && git pull
 fi
 
 # Masuk ke direktori proyek
 cd Kaleido || { echo "[-] Gagal masuk ke direktori Kaleido"; exit 1; }
+
+# Perbarui repository jika sudah ada
+echo "[+] Menarik pembaruan terbaru dari repository..."
+git pull
 
 # Periksa dan instal dependensi
 echo "[+] Menginstal dependensi Node.js..."
@@ -40,15 +41,17 @@ npm install || { echo "[-] Instalasi dependensi gagal"; exit 1; }
 if [ ! -f "wallets.txt" ]; then
     echo "[+] Membuat file wallets.txt..."
     touch wallets.txt
-    echo "Masukkan alamat wallet satu per baris di wallets.txt lalu simpan." > wallets.txt
-    nano wallets.txt
 fi
 
-# Pastikan file wallets.txt tidak kosong
-if [ ! -s "wallets.txt" ]; then
-    echo "[-] File wallets.txt kosong! Harap masukkan alamat wallet."
-    exit 1
-fi
+# Berhenti dan minta pengguna memasukkan alamat wallet sebelum lanjut
+echo "Masukkan alamat wallet satu per baris di wallets.txt, lalu simpan dan keluar."
+nano wallets.txt
+
+# Pastikan file wallets.txt tidak kosong sebelum lanjut
+while [ ! -s "wallets.txt" ]; do
+    echo "[-] File wallets.txt kosong! Masukkan alamat wallet sebelum melanjutkan."
+    nano wallets.txt
+done
 
 # Jalankan bot dalam screen
 echo "[+] Menjalankan bot di dalam screen..."
