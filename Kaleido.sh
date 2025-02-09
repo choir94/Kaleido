@@ -18,13 +18,9 @@ cd Kaleido
 # Instal dependensi
 npm install
 
-# Cek apakah wallets.txt sudah ada dan tidak kosong
-if [ -s "wallets.txt" ]; then
-    echo "File wallets.txt sudah ada, melewati input wallet."
-else
-    echo "Masukkan alamat wallet satu per baris di wallets.txt"
-    nano wallets.txt
-fi
+# Selalu meminta input wallet
+echo "Masukkan alamat wallet satu per baris di wallets.txt"
+nano wallets.txt
 
 # Jalankan bot di dalam screen
 screen -dmS kaleido-bot npm run start
