@@ -1,5 +1,8 @@
-import axios from 'axios'; 
-import chalk from 'chalk';
+// miner.js
+
+import axios from 'axios'
+
+import chalk from 'chalk'
 
 import * as fs from 'fs/promises';
 
@@ -9,7 +12,7 @@ import { dirname, join } from 'path';
 
 import { fileURLToPath } from 'url';
 
-import { displayBanner } from './banner.js';
+import {displayBanner} from './banner.js';
 
 
 
@@ -87,7 +90,7 @@ class KaleidoMiningBot {
 
             this.referralBonus = session.referralBonus;
 
-            console.log(chalk.green(`[Wallet ${this.botIndex}] Successfully loaded previous session`));
+            console.log(chalk.green(`[Wallet ${this.botIndex}] Previous session loaded successfully`));
 
             return true;
 
@@ -139,7 +142,7 @@ class KaleidoMiningBot {
 
                 () => this.api.get(`/check-registration?wallet=${this.wallet}`),
 
-                "Registration Check"
+                "Registration check"
 
             );
 
@@ -153,7 +156,7 @@ class KaleidoMiningBot {
 
 
 
-            // 2. Try loading the previous session
+            // 2. Try to load previous session
 
             const hasSession = await this.loadSession();
 
@@ -161,7 +164,7 @@ class KaleidoMiningBot {
 
             if (!hasSession) {
 
-                // Only initialize new values if there is no previous session
+                // Only initialize new values if no previous session exists
 
                 this.referralBonus = regResponse.data.userData.referralBonus;
 
@@ -265,7 +268,7 @@ class KaleidoMiningBot {
 
                 () => this.api.post('/update-balance', payload),
 
-                "Balance Update"
+                "Balance update"
 
             );
 
@@ -425,7 +428,7 @@ export class MiningCoordinator {
 
         if (this.isRunning) {
 
-            console.log(chalk.yellow('Mining Coordinator is already running'));
+            console.log(chalk.yellow('Mining coordinator is already running'));
 
             return;
 
@@ -473,7 +476,7 @@ export class MiningCoordinator {
 
         process.on('SIGINT', async () => {
 
-            console.log(chalk.yellow('\nShutting down miner...'));
+            console.log(chalk.yellow('\nShutting down miners...'));
 
             this.totalPaid = (await Promise.all(this.bots.map(bot => bot.stop())))
 
@@ -485,9 +488,9 @@ export class MiningCoordinator {
 
             === Final Summary ===
 
-            Total wallets: ${this.bots.length}
+            Total Wallets: ${this.bots.length}
 
-            Total paid: ${this.totalPaid.toFixed(8)} KLDO
+            Total Paid: ${this.totalPaid.toFixed(8)} KLDO
 
             `));
 
@@ -497,4 +500,4 @@ export class MiningCoordinator {
 
     }
 
-}
+    }
