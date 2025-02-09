@@ -1,4 +1,9 @@
 import { MiningCoordinator } from './miner.js';
 
-// Memulai proses penambangan
-new MiningCoordinator().start().catch(console.error);
+(async () => {
+    try {
+        await new MiningCoordinator().start();
+    } catch (error) {
+        console.error('Mining process failed:', error);
+    }
+})();
